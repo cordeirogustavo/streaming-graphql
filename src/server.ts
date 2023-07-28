@@ -7,6 +7,7 @@ import resolvers from './graphql/resolvers';
 import { IYogaContext } from './interfaces/yoga-context';
 
 const prisma = new PrismaClient();
+
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,

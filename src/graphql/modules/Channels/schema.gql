@@ -19,7 +19,8 @@ input InputChannel {
 
 type Query {
   channels: [Channels!]
-  channel(id_channel: Int!): Channels
+  channelById(id_channel: Int!): Channels
+  channel(slug: String!): Channels
   deletedChannels: [Channels!]
 }
 

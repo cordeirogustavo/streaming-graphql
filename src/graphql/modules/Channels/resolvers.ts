@@ -4,11 +4,22 @@ import utils from "../../../utils/handle-errors"
 
 export default {
   Query: {
-    channel: async (parent: any, args: any, ctx: IYogaContext) => {
+    channelById: async (parent: any, args: any, ctx: IYogaContext) => {
       try {
         const channel = await ctx.prisma.channels.findUnique({
           include: { playlists: true, videos: true },
           where: { id_channel: args.id_channel, deleted_at: null },
+        });
+        return channel || null;
+      } catch (err: any) {
+        throw new GraphQLError(utils.handlePrismaErrors(err));
+      }
+    },
+    channel: async (parent: any, args: any, ctx: IYogaContext) => {
+      try {
+        const channel = await ctx.prisma.channels.findFirst({
+          include: { playlists: true, videos: true },
+          where: { slug: args.slug, deleted_at: null },
         });
         return channel || null;
       } catch (err: any) {
