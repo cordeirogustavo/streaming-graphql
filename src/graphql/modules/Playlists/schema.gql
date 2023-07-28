@@ -1,0 +1,30 @@
+
+type Playlists {
+  id_playlist: ID!
+  name: String!
+  description: String
+  created_at: String
+  updated_at: String
+  deleted_at: String
+  id_channel: ID!
+  playlistVideos: [PlaylistVideos!]
+}
+
+input InputPlaylist {
+  name: String!
+  description: String
+  id_channel: ID!
+}
+
+type Query {
+  playlists: [Playlists!]
+  playlist(id_playlist: Int!): Playlists
+  deletedPlaylists: [Playlists!]
+}
+
+type Mutation {
+  createPlaylist(data: InputPlaylist): Playlists!
+  updatePlaylist(id_playlist: ID!, data: InputChannel): Playlists
+  deletePlaylist(id_playlist: ID!): String!
+  reactivatePlaylist(id_playlist: ID!): String!
+}

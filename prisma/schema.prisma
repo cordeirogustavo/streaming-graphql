@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model channels {
+  id_channel  Int          @id @default(autoincrement())
+  name        String       @db.VarChar(50)
+  slug        String       @db.VarChar(50)
+  description String?      @db.VarChar(200)
+  created_at  DateTime?    @default(dbgenerated("'2023-07-28 02:30:43.478084'::timestamp without time zone")) @db.Timestamp(6)
+  updated_at  DateTime?    @db.Timestamp(6)
+  deleted_at  DateTime?    @db.Timestamp(6)
+  playlists   playlists[]
+  subscribed  subscribed[]
+  videos      videos[]
+}
+
+model playlists {
+  id_playlist    Int              @id(map: "PK_playlists") @default(autoincrement())
+  name           String           @db.VarChar(100)
+  description    String?          @db.VarChar(200)
+  created_at     DateTime?        @default(dbgenerated("'2023-07-28 02:30:43.478084'::timestamp without time zone")) @db.Timestamp(6)
+  updated_at     DateTime?        @db.Timestamp(6)
+  deleted_at     DateTime?        @db.Timestamp(6)
+  id_channel     Int              @default(autoincrement())
+  playlistVideos playlistVideos[]
+  channels       channels         @relation(fields: [id_channel], references: [id_channel], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model subscribed {
+  id_user       Int       @default(autoincrement())
+  id_channel    Int       @default(autoincrement())
+  subscribed_at DateTime? @default(dbgenerated("'2023-07-28 02:30:43.478084'::timestamp without time zone")) @db.Timestamp(6)
+  channels      channels  @relation(fields: [id_channel], references: [id_channel], onDelete: NoAction, onUpdate: NoAction)
+  users         users     @relation(fields: [id_user], references: [id_user], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_user, id_channel])
+}
+
+model users {
+  id_user    Int          @id @default(autoincrement())
+  name       String       @db.VarChar(200)
+  email      String       @db.VarChar(120)
+  created_at DateTime?    @default(dbgenerated("'2023-07-28 02:30:43.478084'::timestamp without time zone")) @db.Timestamp(6)
+  updated_at DateTime?    @db.Timestamp(6)
+  deleted_at DateTime?    @db.Timestamp(6)
+  subscribed subscribed[]
+}
+
+model videos {
+  id_video       Int              @id @default(autoincrement())
+  title          String           @db.VarChar(100)
+  description    String?          @db.VarChar(200)
+  url            String?          @db.VarChar(300)
+  id_channel     Int              @default(autoincrement())
+  created_at     DateTime?        @default(dbgenerated("'2023-07-28 02:30:43.478084'::timestamp without time zone")) @db.Timestamp(6)
+  updated_at     DateTime?        @db.Timestamp(6)
+  deleted_at     DateTime?        @db.Timestamp(6)
+  playlistVideos playlistVideos[]
+  channels       channels         @relation(fields: [id_channel], references: [id_channel], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model playlistVideos {
+  id_video    Int       @default(autoincrement())
+  id_playlist Int       @default(autoincrement())
+  playlists   playlists @relation(fields: [id_playlist], references: [id_playlist], onDelete: NoAction, onUpdate: NoAction)
+  videos      videos    @relation(fields: [id_video], references: [id_video], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([id_video, id_playlist])
+}

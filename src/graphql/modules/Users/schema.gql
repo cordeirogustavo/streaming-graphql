@@ -1,0 +1,27 @@
+
+type Users {
+  id_user: ID!
+  name: String!
+  email: String!
+  created_at: String
+  updated_at: String
+  deleted_at: String
+}
+
+input InputUser {
+  name: String!
+  email: String!
+}
+
+type Query {
+  users: [Users!]
+  user(id_user: Int!): Users
+  deletedUsers: [Users!]
+}
+
+type Mutation {
+  createUser(data: InputUser): Users!
+  updateUser(id_user: ID!, data: InputUser): Users
+  deleteUser(id_user: ID!): String!
+  reactivateUser(id_user: ID!): String!
+}

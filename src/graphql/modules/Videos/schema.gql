@@ -1,0 +1,32 @@
+
+type Videos {
+  id_video: ID!
+  title: String!
+  description: String
+  url: String
+  id_channel: ID!
+  created_at: String
+  updated_at: String
+  deleted_at: String
+  channels: Channels!
+}
+
+input InputVideo {
+  title: String!
+  description: String
+  url: String
+  id_channel: ID!
+}
+
+type Query {
+  videos: [Videos!]
+  video(id_video: Int!): Videos
+  deletedVideos: [Videos!]
+}
+
+type Mutation {
+  createVideo(data: InputVideo): Videos!
+  updateVideo(id_video: ID!, data: InputVideo): Videos
+  deleteVideo(id_video: ID!): String!
+  reactivateVideo(id_video: ID!): String!
+}

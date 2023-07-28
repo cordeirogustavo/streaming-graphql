@@ -1,0 +1,31 @@
+
+type Channels {
+  id_channel: ID!
+  name: String!
+  slug: String!
+  description: String
+  created_at: String
+  updated_at: String
+  deleted_at: String
+  videos: [Videos]
+  playlists: [Playlists]
+}
+
+input InputChannel {
+  name: String!
+  slug: String!
+  description: String
+}
+
+type Query {
+  channels: [Channels!]
+  channel(id_channel: Int!): Channels
+  deletedChannels: [Channels!]
+}
+
+type Mutation {
+  createChannel(data: InputChannel): Channels!
+  updateChannel(id_channel: ID!, data: InputChannel): Channels
+  deleteChannel(id_channel: ID!): String!
+  reactivateChannel(id_channel: ID!): String!
+}

@@ -1,0 +1,22 @@
+
+type PlaylistVideos {
+  id_video: ID!
+  id_playlist: ID!
+  videos: Videos!
+  playlist: Playlists!
+}
+
+input InputPlaylistVideo {
+  id_video: ID!
+  id_playlist: ID!
+}
+
+type Query {
+  playlistVideos(id_playlist: Int!): [PlaylistVideos!]
+  playlistVideo(id_video: Int!, id_playlist: Int!): PlaylistVideos
+}
+
+type Mutation {
+  createPlaylistVideo(data: InputPlaylistVideo): Videos!
+  removeVideoFromPlaylist(id_video: ID!): String!
+}
