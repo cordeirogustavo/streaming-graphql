@@ -7,7 +7,7 @@ GraphQL API example
 Docker, Docker-compose
 
 ## Run in Locally
-Install *streaming-graphql* with yarn
+Install *streaming-graphql* with docker-compose
 
 ```bash
   git clone https://github.com/cordeirogustavo/streaming-graphql.git
