@@ -1,1 +1,1 @@
-CREATE DATABASE streaming;
+CREATE DATABASE IF NOT EXISTS public.streaming;

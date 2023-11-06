@@ -1,0 +1,37 @@
+version: "3.4"
+services:
+  ts-graphql:
+    image: cordeirogustavo/ts-graphql:latest
+    container_name: ts-graphql
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - streaming-pg
+    networks:
+      - ts-graphql-network
+  
+  #databse
+  streaming-pg:
+      container_name: "streaming-pg"
+      image: postgres
+      ports:
+        - "5432:5432"
+
+      environment:
+        DB_HOST: streaming-pg
+        POSTGRES_DB: streaming
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: teste
+
+      volumes:
+        - $HOME/postgres-data:/var/lib/postgresql/data
+
+      networks:
+        - ts-graphql-network
+      
+networks:
+  ts-graphql-network:
+    name: ts-graphql-network

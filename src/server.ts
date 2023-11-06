@@ -25,8 +25,8 @@ const yoga = createYoga({
 
 const server = createServer(yoga)
 
-server.listen(5000, () =>
+server.listen(8000, () =>
   console.log(
-    `Server started, listening on port 5000 for incoming requests.`
+    `Server started, listening on port 8000 for incoming requests.`
   )
 );

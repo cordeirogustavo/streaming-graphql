@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc"
+    "build": "tsc",
+    "db-generate": "prisma generate --schema=./prisma/schema.prisma",
+    "db-push": "prisma db push --schema=./prisma/schema.prisma"   
   },
   "keywords": [],
   "author": "",
@@ -15,7 +17,7 @@
     "@types/ws": "^8.5.5",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "dependencies": {
     "@graphql-tools/load-files": "^7.0.0",
